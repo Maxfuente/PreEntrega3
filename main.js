@@ -1,4 +1,6 @@
-    // Función para calcular los intereses
+
+
+// Función para calcular los intereses
     function calcularIntereses(credito, tasaInteres) {
         return credito * tasaInteres;
       }
@@ -62,9 +64,7 @@
       const simularButton = document.getElementById("simular");
       simularButton.addEventListener("click", simularCredito);
 
-       // Evento de click en el botón de limpiar
-    const limpiarButton = document.getElementById("limpiar");
-    limpiarButton.addEventListener("click", limpiarSimulaciones);
+       
   
       // Mostrar simulaciones guardadas al cargar la página
       mostrarSimulaciones();
