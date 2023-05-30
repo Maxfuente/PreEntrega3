@@ -1,94 +1,113 @@
-// Función para calcular los intereses
-function calcularIntereses(prestamo, tasaInteres) {
-    return prestamo * tasaInteres;
-  }
+    // Función para calcular los intereses
+    function calcularIntereses(credito, tasaInteres) {
+        return credito * tasaInteres;
+      }
+  
+      // Función para calcular el valor de la cuota mensual
+      function calcularCuotaMensual(credito, plazo, tasaInteres) {
+        const intereses = calcularIntereses(credito, tasaInteres);
+        const montoTotal = credito + intereses;
+        const cuotaMensual = montoTotal / plazo;
+        return cuotaMensual.toFixed(2);
+      }
+  
+      // Función para simular el crédito
+      function simularCredito() {
+        const nombre = document.getElementById("nombre").value;
+        const credito = parseFloat(document.getElementById("credito").value);
+        const plazo = parseInt(document.getElementById("plazo").value);
+  
+        let tasaInteres = 0.20;
+  
+        if (plazo >= 18) {
+          tasaInteres = 0.15;
+        }
+  
+        const cuotaMensual = calcularCuotaMensual(credito, plazo, tasaInteres);
+  
+        // Mostrar el resultado en la página
+        const resultadoDiv = document.getElementById("resultado");
+        resultadoDiv.innerHTML = `
+          <h2>Resultado de la simulación</h2>
+          <p>Nombre: ${nombre}</p>
+          <p>Monto del crédito: ${credito}</p>
+          <p>Plazo en meses: ${plazo}</p>
+          <p>Tasa de interés: ${(tasaInteres * 100).toFixed(2)}%</p>
+          <p>Cuota mensual: ${cuotaMensual}</p>
+        `;
+  
+        // Crear objeto de simulación
+        const simulacion = {
+          nombre: nombre,
+          credito: credito,
+          plazo: plazo,
+          tasaInteres: tasaInteres,
+          cuotaMensual: cuotaMensual
+        };
+  
+        // Obtener simulaciones existentes
+        const simulaciones = obtenerSimulaciones();
+  
+        // Agregar la nueva simulación al array de simulaciones
+        simulaciones.push(simulacion);
+  
+        // Guardar simulaciones actualizadas en el almacenamiento local
+        guardarSimulaciones(simulaciones);
+  
+        // Mostrar simulaciones guardadas
+        mostrarSimulaciones();
+      }
+  
+      // Evento de click en el botón de simulación
+      const simularButton = document.getElementById("simular");
+      simularButton.addEventListener("click", simularCredito);
 
-  // Función para calcular el valor de la cuota mensual
-  function calcularCuotaMensual(prestamo, plazo, tasaInteres) {
-    const intereses = calcularIntereses(prestamo, tasaInteres);
-    const montoTotal = prestamo + intereses;
-    const cuotaMensual = montoTotal / plazo;
-    return cuotaMensual;
-  }
+       // Evento de click en el botón de limpiar
+    const limpiarButton = document.getElementById("limpiar");
+    limpiarButton.addEventListener("click", limpiarSimulaciones);
+  
+      // Mostrar simulaciones guardadas al cargar la página
+      mostrarSimulaciones();
+    
 
-  // Función para simular el crédito
-  function simularCredito() {
-    const nombre = document.getElementById("nombre").value;
-    const prestamo = parseFloat(document.getElementById("prestamo").value);
-    const plazo = parseInt(document.getElementById("plazo").value);
 
-    let tasaInteres = 0.08;
-
-    if (plazo >= 18) {
-      tasaInteres = 0.12;
+    // Función para guardar simulaciones en el almacenamiento local
+    function guardarSimulaciones(simulaciones) {
+      localStorage.setItem("simulaciones", JSON.stringify(simulaciones));
     }
 
-    const cuotaMensual = calcularCuotaMensual(prestamo, plazo, tasaInteres);
+    // Función para obtener simulaciones desde el almacenamiento local
+    function obtenerSimulaciones() {
+      const simulaciones = localStorage.getItem("simulaciones");
+      if (simulaciones) {
+        return JSON.parse(simulaciones);
+      }
+      return [];
+    }
 
-    // Mostrar el resultado en la página
-    const resultadoDiv = document.getElementById("resultado");
-    resultadoDiv.innerHTML = `
-      <h2>Resultado de la simulación</h2>
-      <p>Nombre: ${nombre}</p>
-      <p>Monto del préstamo: ${prestamo}</p>
-      <p>Plazo en meses: ${plazo}</p>
-      <p>Tasa de interés: ${(tasaInteres * 100).toFixed(2)}%</p>
-      <p>Cuota mensual: ${cuotaMensual.toFixed(2)}</p>
-    `;
+    // Función para mostrar simulaciones guardadas
+    function mostrarSimulaciones() {
+      const simulacionesDiv = document.getElementById("simulaciones");
+      simulacionesDiv.innerHTML = "";
 
-    // Crear objeto de simulación
-    const simulacion = {
-      nombre: nombre,
-      prestamo: prestamo,
-      plazo: plazo,
-      tasaInteres: tasaInteres,
-      cuotaMensual: cuotaMensual.toFixed(2)
-    };
+      const simulaciones = obtenerSimulaciones();
 
-    // Guardar la simulación en el almacenamiento local
-    guardarSimulacion(simulacion);
-  }
+      simulaciones.forEach(function(simulacion, index) {
+        const simulacionDiv = document.createElement("div");
+        simulacionDiv.classList.add("simulacion");
 
-  // Función para guardar la simulación en el almacenamiento local
-  function guardarSimulacion(simulacion) {
-    // Obtener las simulaciones existentes del almacenamiento local
-    let simulaciones = JSON.parse(localStorage.getItem("simulaciones")) || [];
+        const contenidoSimulacion = `
+          <h2>Simulación ${index + 1}</h2>
+          <p>Nombre: ${simulacion.nombre}</p>
+          <p>Monto del crédito: ${simulacion.credito}</p>
+          <p>Plazo en meses: ${simulacion.plazo}</p>
+          <p>Tasa de interés: ${(simulacion.tasaInteres * 100).toFixed(2)}%</p>
+          <p>Cuota mensual: ${simulacion.cuotaMensual}</p>
+        `;
 
-    // Agregar la nueva simulación al array de simulaciones
-    simulaciones.push(simulacion);
+        simulacionDiv.innerHTML = contenidoSimulacion;
+        simulacionesDiv.appendChild(simulacionDiv);
+      });
+    }
 
-    // Guardar las simulaciones actualizadas en el almacenamiento local
-    localStorage.setItem("simulaciones", JSON.stringify(simulaciones));
-  }
 
-  // Obtener y mostrar las simulaciones guardadas
-  function mostrarSimulacionesGuardadas() {
-    const simulacionesDiv = document.getElementById("simulaciones");
-
-    // Obtener las simulaciones del almacenamiento local
-    const simulaciones = JSON.parse(localStorage.getItem("simulaciones")) || [];
-
-    // Mostrar cada simulación en el div de simulaciones
-    simulacionesDiv.innerHTML = "";
-
-    simulaciones.forEach(function(simulacion, index) {
-      const simulacionDiv = document.createElement("div");
-      simulacionDiv.innerHTML = `
-        <h2>Simulación ${index + 1}</h2>
-        <p>Nombre: ${simulacion.nombre}</p>
-        <p>Monto del préstamo: ${simulacion.prestamo}</p>
-        <p>Plazo en meses: ${simulacion.plazo}</p>
-        <p>Tasa de interés: ${(simulacion.tasaInteres * 100).toFixed(2)}%</p>
-        <p>Cuota mensual: ${simulacion.cuotaMensual}</p>
-      `;
-
-      simulacionesDiv.appendChild(simulacionDiv);
-    });
-  }
-
-  // Agregar evento de click al botón de simulación
-  const simularButton = document.getElementById("simular");
-  simularButton.addEventListener("click", simularCredito);
-
-  // Mostrar simulaciones guardadas al cargar la página
-  mostrarSimulacionesGuardadas();
