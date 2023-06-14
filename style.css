@@ -1,9 +1,9 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
   .banner {
-    background-color: #003366;
-    color: #ffffff;
+    background-color: #286eb448;
+    color: #db1010;
     padding: 20px;
     text-align: center;
 }
@@ -34,10 +34,10 @@ body {
 
   button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #193755de;
     color: white;
-    border: none;
-    cursor: pointer;
+    border-radius: 20px;
+    
   }
 
   button:hover {

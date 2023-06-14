@@ -144,3 +144,6 @@ function solicitarCredito() {
 // Evento de click en el botón de solicitud de crédito
 const solicitarCreditoButton = document.getElementById("solicitarCredito");
 solicitarCreditoButton.addEventListener("click", solicitarCredito);
+
+
+
