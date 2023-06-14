@@ -110,4 +110,37 @@
       });
     }
 
+// Función para obtener el último monto simulado
+function obtenerUltimoMontoSimulado() {
+  const simulaciones = obtenerSimulaciones();
 
+  if (simulaciones.length > 0) {
+    const ultimaSimulacion = simulaciones[simulaciones.length - 1];
+    return ultimaSimulacion.credito;
+  }
+
+  return 0;
+}
+
+// Función para mostrar ventana de solicitud de crédito con el monto simulado
+function solicitarCredito() {
+  const montoSimulado = obtenerUltimoMontoSimulado();
+  Swal.fire({
+    title: '¿Seguro que quieres solicitar el credito?',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'SI',
+    denyButtonText: `No`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      Swal.fire('Realizado!', '', 'success')
+    } else if (result.isDenied) {
+      Swal.fire('No lo haz realizado', '', 'info')
+    }
+  })
+}
+
+// Evento de click en el botón de solicitud de crédito
+const solicitarCreditoButton = document.getElementById("solicitarCredito");
+solicitarCreditoButton.addEventListener("click", solicitarCredito);
