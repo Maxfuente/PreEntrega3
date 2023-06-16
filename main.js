@@ -146,7 +146,7 @@ function solicitarCredito() {
   }).then((result) => {
     if (result.isConfirmed) {
       // Acciones a realizar al confirmar la solicitud
-      Swal.fire('Credito has sido otorgado, Felicidades', '', 'success');
+      Swal.fire('Tu Credito ha sido otorgado, Felicidades', '', 'success');
     } else if (result.isDenied) {
       // Acciones a realizar al cancelar la solicitud
       Swal.fire('De los arrepentidos es el reino de los cielos', '', 'info');
