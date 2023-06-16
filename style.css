@@ -68,3 +68,25 @@ body {
   .simulacion p {
     margin-bottom: 5px;
   }
+
+
+  /* Estilos para pantallas más pequeñas (hasta 768px de ancho) */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px; /* Ejemplo de reducción de tamaño de fuente para pantallas más pequeñas */
+  }
+}
+
+/* Estilos para pantallas medianas (entre 769px y 1024px de ancho) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 18px; /* Ejemplo de aumento de tamaño de fuente para pantallas medianas */
+  }
+}
+
+/* Estilos para pantallas más grandes (más de 1024px de ancho) */
+@media (min-width: 1025px) {
+  body {
+    font-size: 20px; /* Ejemplo de aumento de tamaño de fuente para pantallas más grandes */
+  }
+}
